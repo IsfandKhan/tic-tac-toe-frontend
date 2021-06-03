@@ -1,0 +1,7 @@
+<div class="play-area">
+  <app-block
+    *ngFor="let block of board?.split(''); let i = index"
+    [data]="{ id: i, mark: block }"
+    (onClick)="clicked(i)"
+  ></app-block>
+</div>
