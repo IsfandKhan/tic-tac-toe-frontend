@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { BlockComponent, BoardComponent } from './components';
 import { GameComponent, HomeComponent } from './pages';
 import { ApiService } from './services';
+import { ErrorHandler } from './interceptors';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +28,10 @@ import { ApiService } from './services';
       preventDuplicates: true
     })
   ],
-  providers: [ApiService],
+  providers: [
+    ApiService,
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorHandler, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

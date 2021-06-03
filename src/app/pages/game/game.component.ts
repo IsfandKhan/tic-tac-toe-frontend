@@ -21,16 +21,16 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-      this.apiService.getGame(params.id).subscribe((res: any) => {
-        this.boardId = res.id;
-        this.board = res.board;
-        this.checkGameStatus(res);
-      }),
-        (err) => {
-          this.notifier.error(
-            err.error.reason || 'No Internet/Server Connection available'
-          );
-        };
+      this.boardId = params.id;
+      this.getGame();
+    });
+  }
+
+  getGame() {
+    this.apiService.getGame(this.boardId).subscribe((res: any) => {
+      this.boardId = res.id;
+      this.board = res.board;
+      this.checkGameStatus(res);
     });
   }
 
@@ -52,32 +52,26 @@ export class GameComponent implements OnInit {
   }
 
   updateBoard(index) {
-    this.apiService.placeMark(this.boardId, this.board, index).subscribe(
-      (res: any) => {
-        this.boardId = res.id;
-        this.board = res.board;
-        this.checkGameStatus(res);
-      },
-      (err) => {
-        this.notifier.error(
-          err.error.reason || 'No Internet/Server Connection available'
-        );
-      }
-    );
+    this.apiService
+      .checkMove(this.boardId, this.board, index)
+      .subscribe((res: any) => {
+        if (res.moveValidity) {
+          this.apiService
+            .placeMark(this.boardId, this.board, index)
+            .subscribe((res: any) => {
+              this.boardId = res.id;
+              this.board = res.board;
+              this.checkGameStatus(res);
+            });
+        }
+      });
   }
 
   deleteGame() {
-    this.apiService.deleteGame(this.boardId).subscribe(
-      () => {
-        this.backToHome();
-        this.notifier.success('Game Deleted Successfully');
-      },
-      (err) => {
-        this.notifier.error(
-          err.error.reason || 'No Internet/Server Connection available'
-        );
-      }
-    );
+    this.apiService.deleteGame(this.boardId).subscribe(() => {
+      this.backToHome();
+      this.notifier.success('Game Deleted Successfully');
+    });
   }
 
   backToHome() {

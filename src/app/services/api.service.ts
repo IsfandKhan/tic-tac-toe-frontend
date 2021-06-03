@@ -5,13 +5,18 @@ import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ApiService {
-  private gamesUrl = environment.production ? environment.apiUrl  : '/api/v1/games';
-  board = '---------';
+  private gamesUrl = environment.production
+    ? environment.apiUrl
+    : '/api/v1/games';
+
   constructor(private http: HttpClient) {}
 
+  getAllGames() {
+    return this.http.get(this.gamesUrl);
+  }
   createGame() {
     return this.http
-      .post(`${this.gamesUrl}`, { board: this.board })
+      .post(`${this.gamesUrl}`, { board: '---------' })
       .pipe(map((res: any) => res.location));
   }
 
@@ -25,5 +30,14 @@ export class ApiService {
 
   deleteGame(id) {
     return this.http.delete(`${this.gamesUrl}/${id}`);
+  }
+
+  checkMove(id, board, index) {
+    return this.http.get(`${this.gamesUrl}/${id}/move`, {
+      params: {
+        board,
+        index
+      }
+    });
   }
 }
