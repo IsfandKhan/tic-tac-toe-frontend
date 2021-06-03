@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "dev": "ng serve --proxy-config proxy.conf.json",
+    "dev": "ng serve --proxy-config proxy.conf.json -o",
     "build:prod": "ng build --prod --aot=true --buildOptimizer=true",
     "heroku-postbuild": "npm run build:prod"
   },
