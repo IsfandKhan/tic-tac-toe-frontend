@@ -19,7 +19,7 @@ export class HomeComponent {
         this.router.navigateByUrl(location);
       },
       (err) => {
-        this.notifier.error(err.error.reason);
+        this.notifier.error(err.error.reason || 'No Internet/Server Connection available');
       }
     );
   }

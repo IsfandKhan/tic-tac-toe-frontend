@@ -28,7 +28,7 @@ export class GameComponent implements OnInit {
         this.checkGameStatus(res);
       }),
         (err) => {
-          this.notifier.error(err.error.reason);
+          this.notifier.error(err.error.reason || 'No Internet/Server Connection available');
         };
     });
   }
@@ -59,7 +59,7 @@ export class GameComponent implements OnInit {
         this.checkGameStatus(res);
       },
       (err) => {
-        this.notifier.error(err.error.reason);
+        this.notifier.error(err.error.reason|| 'No Internet/Server Connection available');
       }
     );
   }
@@ -71,7 +71,7 @@ export class GameComponent implements OnInit {
         this.notifier.success('Game Deleted Successfully');
       },
       (err) => {
-        this.notifier.error(err.error.reason);
+        this.notifier.error(err.error.reason|| 'No Internet/Server Connection available');
       }
     );
   }
