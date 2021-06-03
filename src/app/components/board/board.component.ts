@@ -6,13 +6,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
-  @Input() board;
-  @Output() onClick = new EventEmitter<number>();
+  @Input() board: string;
+  @Output() onClick: EventEmitter<number> = new EventEmitter();
   constructor() {}
 
   ngOnInit() {}
 
-  clicked(index) {
+  clicked(index: number) {
     this.onClick.emit(index);
   }
 }

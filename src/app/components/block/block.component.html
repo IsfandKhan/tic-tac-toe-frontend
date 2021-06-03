@@ -1,1 +1,3 @@
-<div [id]="'block_' + data.id" class="block" (click)="blockClicked()">{{data.mark !== '-' ? data.mark : ''}}</div>
+<div [id]="'block_' + block?.id" class="block" (click)="blockClicked()">
+  {{ block.mark !== '-' ? block.mark : '' }}
+</div>

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ApiService } from 'src/app/services';
-
+import { ApiService } from '../../services';
+import { Game } from '../../models';
 @Component({
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public games;
+  public games: Array<Game> = [];
 
   constructor(
     private router: Router,
@@ -21,21 +21,24 @@ export class HomeComponent implements OnInit {
   }
 
   private getAllGames() {
-    this.apiService.getAllGames().subscribe((res) => {
-      this.games = res;
-    });
+    this.apiService
+      .getAllGames()
+      .subscribe(games => (this.games = games));
   }
 
   startGame() {
-    this.apiService.createGame().subscribe(
-      (location) => {
-        this.router.navigateByUrl(location);
-      },
-      (err) => {
-        this.notifier.error(
-          err.error.reason || 'No Internet/Server Connection available'
-        );
-      }
-    );
+    this.apiService
+      .createGame()
+      .subscribe(location => this.router.navigateByUrl(location));
+  }
+
+  deleteGame(e, id) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.apiService.deleteGame(id).subscribe(() => {
+      const gameIndex = this.games.findIndex(game => game.id === id);
+      this.games.splice(gameIndex, 1);
+      this.notifier.success('Game Deleted Successfully');
+    });
   }
 }

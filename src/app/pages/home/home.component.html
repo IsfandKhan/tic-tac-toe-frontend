@@ -8,5 +8,13 @@
     class="card"
   >
     {{ game.id }}
+    <img
+      src="/assets/bin.png"
+      width="40"
+      height="40"
+      alt="delete game"
+      title="Delete Game"
+      (click)="deleteGame($event, game.id)"
+    />
   </a>
 </div>

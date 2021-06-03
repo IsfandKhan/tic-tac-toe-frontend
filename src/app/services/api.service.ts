@@ -2,42 +2,35 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Game } from '../models';
 
 @Injectable()
 export class ApiService {
   private gamesUrl = environment.production
-    ? environment.apiUrl
+    ? window.location.protocol + environment.apiUrl
     : '/api/v1/games';
 
   constructor(private http: HttpClient) {}
 
   getAllGames() {
-    return this.http.get(this.gamesUrl);
+    return this.http.get<Array<Game>>(this.gamesUrl);
   }
+
   createGame() {
     return this.http
-      .post(`${this.gamesUrl}`, { board: '---------' })
-      .pipe(map((res: any) => res.location));
+      .post<{ location: string }>(`${this.gamesUrl}`, { board: '---------' })
+      .pipe(map((res) => res.location));
   }
 
-  getGame(id) {
-    return this.http.get(`${this.gamesUrl}/${id}`);
+  getGame(id: string) {
+    return this.http.get<Game>(`${this.gamesUrl}/${id}`);
   }
 
-  placeMark(id, board, index) {
-    return this.http.put(`${this.gamesUrl}/${id}`, { board, index });
+  placeMark(id: string, board: string, index: number) {
+    return this.http.put<Game>(`${this.gamesUrl}/${id}`, { board, index });
   }
 
-  deleteGame(id) {
+  deleteGame(id: string) {
     return this.http.delete(`${this.gamesUrl}/${id}`);
-  }
-
-  checkMove(id, board, index) {
-    return this.http.get(`${this.gamesUrl}/${id}/move`, {
-      params: {
-        board,
-        index
-      }
-    });
   }
 }

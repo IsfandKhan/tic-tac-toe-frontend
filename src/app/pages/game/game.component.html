@@ -2,11 +2,12 @@
   <fieldset [disabled]="message">
     <h1 style="margin-bottom: 10px">Tic-Tac-Toe</h1>
     <app-board
-      [board]="board"
+      [board]="game?.board"
       (onClick)="!message ? updateBoard($event) : null"
     ></app-board>
     <h2 style="margin-top: 10px" id="winner">{{ message }}</h2>
   </fieldset>
-  <button style="margin-top: 10px" (click)="deleteGame()">DELETE GAME</button>
-  <button style="margin-top: 10px" (click)="backToHome()">BACK TO HOME</button>
+  <button (click)="newGame()">NEW GAME</button>
+  <button (click)="deleteGame()">DELETE GAME</button>
+  <button (click)="backToHome()">BACK TO HOME</button>
 </div>
