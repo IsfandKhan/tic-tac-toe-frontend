@@ -3,7 +3,7 @@
     <h1 style="margin-bottom: 10px">Tic-Tac-Toe</h1>
     <app-board
       [board]="game?.board"
-      (onClick)="!message ? updateBoard($event) : null"
+      (onClick)="!message ? updateBoard($event) : gameOver()"
     ></app-board>
     <h2 style="margin-top: 10px" id="winner">{{ message }}</h2>
   </fieldset>

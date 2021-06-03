@@ -1,20 +1,18 @@
-<div class="container">
-  <button (click)="startGame()">START NEW GAME</button>
-  <h1>All Saved Games</h1>
-  <a
-    *ngFor="let game of games"
-    [routerLink]="['/' + game.id]"
-    routerLinkActive="router-link-active"
-    class="card"
-  >
-    {{ game.id }}
-    <img
-      src="/assets/bin.png"
-      width="40"
-      height="40"
-      alt="delete game"
-      title="Delete Game"
-      (click)="deleteGame($event, game.id)"
-    />
-  </a>
-</div>
+<button (click)="startGame()">START NEW GAME</button>
+<h1>All Saved Games</h1>
+<a
+  *ngFor="let game of games"
+  [routerLink]="['/' + game.id]"
+  routerLinkActive="router-link-active"
+  class="card"
+>
+  {{ game.id }}
+  <img
+    src="/assets/bin.png"
+    width="40"
+    height="40"
+    alt="delete game"
+    title="Delete Game"
+    (click)="deleteGame($event, game.id)"
+  />
+</a>

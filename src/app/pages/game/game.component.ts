@@ -10,7 +10,7 @@ import { Game, STATUS } from '../../models';
 })
 export class GameComponent implements OnInit {
   public game: Game;
-  public message = '';
+  public message;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,8 +21,9 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(() => {
+      this.message = '';
       this.game = this.route.snapshot.data.game;
-    })
+    });
   }
 
   private checkGameStatus() {
@@ -67,5 +68,9 @@ export class GameComponent implements OnInit {
     this.apiService
       .createGame()
       .subscribe((location) => this.router.navigateByUrl(location));
+  }
+
+  gameOver() {
+    this.notifier.info('Game Over!', 'Start a new game');
   }
 }
