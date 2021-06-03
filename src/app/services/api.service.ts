@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ApiService {
-  private gamesUrl = '/api/v1/games';
+  private gamesUrl = environment.production ? environment.apiUrl  : '/api/v1/games';
   board = '---------';
   constructor(private http: HttpClient) {}
 
