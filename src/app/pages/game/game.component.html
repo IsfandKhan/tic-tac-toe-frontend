@@ -1,11 +1,12 @@
-<fieldset [disabled]="message">
-  <div class="container">
+<div class="container">
+  <fieldset [disabled]="message">
     <h1 style="margin-bottom: 10px">Tic-Tac-Toe</h1>
     <app-board
       [board]="board"
       (onClick)="!message ? updateBoard($event) : null"
     ></app-board>
     <h2 style="margin-top: 10px" id="winner">{{ message }}</h2>
-    <button style="margin-top: 10px" (click)="deleteGame()">DELETE GAME</button>
-  </div>
-</fieldset>
+  </fieldset>
+  <button style="margin-top: 10px" (click)="deleteGame()">DELETE GAME</button>
+  <button style="margin-top: 10px" (click)="backToHome()">BACK TO HOME</button>
+</div>

@@ -22,13 +22,14 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.apiService.getGame(params.id).subscribe((res: any) => {
-        console.log(res);
         this.boardId = res.id;
         this.board = res.board;
         this.checkGameStatus(res);
       }),
         (err) => {
-          this.notifier.error(err.error.reason || 'No Internet/Server Connection available');
+          this.notifier.error(
+            err.error.reason || 'No Internet/Server Connection available'
+          );
         };
     });
   }
@@ -37,7 +38,7 @@ export class GameComponent implements OnInit {
     switch (data.status) {
       case 'X_WON':
         this.message = 'You Won';
-        this.notifier.success(this.message)
+        this.notifier.success(this.message);
         break;
       case 'O_WON':
         this.message = 'Computer Won';
@@ -45,7 +46,7 @@ export class GameComponent implements OnInit {
         break;
       case 'DRAW':
         this.message = 'Game Drawn';
-        this.notifier.info(this.message)
+        this.notifier.info(this.message);
         break;
     }
   }
@@ -53,13 +54,14 @@ export class GameComponent implements OnInit {
   updateBoard(index) {
     this.apiService.placeMark(this.boardId, this.board, index).subscribe(
       (res: any) => {
-        console.log(res);
         this.boardId = res.id;
         this.board = res.board;
         this.checkGameStatus(res);
       },
       (err) => {
-        this.notifier.error(err.error.reason|| 'No Internet/Server Connection available');
+        this.notifier.error(
+          err.error.reason || 'No Internet/Server Connection available'
+        );
       }
     );
   }
@@ -67,12 +69,18 @@ export class GameComponent implements OnInit {
   deleteGame() {
     this.apiService.deleteGame(this.boardId).subscribe(
       () => {
-        this.router.navigateByUrl('/');
+        this.backToHome();
         this.notifier.success('Game Deleted Successfully');
       },
       (err) => {
-        this.notifier.error(err.error.reason|| 'No Internet/Server Connection available');
+        this.notifier.error(
+          err.error.reason || 'No Internet/Server Connection available'
+        );
       }
     );
+  }
+
+  backToHome() {
+    this.router.navigateByUrl('/');
   }
 }
